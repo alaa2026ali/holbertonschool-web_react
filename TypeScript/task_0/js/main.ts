@@ -1,39 +1,51 @@
-interface Student {
-  firstName: string;
-  lastName: string;
-  age: number;
-  location: string;
+interface DirectorInterface {
+  workFromHome(): string;
+  getCoffeeBreak(): string;
+  workDirectorTasks(): string;
 }
 
-const student1: Student = {
-  firstName: 'Alaa',
-  lastName: 'Aldosari',
-  age: 25,
-  location: 'Riyadh',
-};
+interface TeacherInterface {
+  workFromHome(): string;
+  getCoffeeBreak(): string;
+  workTeacherTasks(): string;
+}
 
-const student2: Student = {
-  firstName: 'Sara',
-  lastName: 'Ahmed',
-  age: 24,
-  location: 'Jeddah',
-};
+class Director implements DirectorInterface {
+  workFromHome(): string {
+    return 'Working from home';
+  }
 
-const studentsList: Student[] = [student1, student2];
+  getCoffeeBreak(): string {
+    return 'Getting a coffee break';
+  }
 
-const table: HTMLTableElement = document.createElement('table');
+  workDirectorTasks(): string {
+    return 'Getting to director tasks';
+  }
+}
 
-studentsList.forEach((student: Student) => {
-  const row: HTMLTableRowElement = table.insertRow();
+class Teacher implements TeacherInterface {
+  workFromHome(): string {
+    return 'Cannot work from home';
+  }
 
-  const firstNameCell: HTMLTableCellElement = row.insertCell();
-  firstNameCell.textContent = student.firstName;
+  getCoffeeBreak(): string {
+    return 'Cannot have a break';
+  }
 
-  const locationCell: HTMLTableCellElement = row.insertCell();
-  locationCell.textContent = student.location;
-});
+  workTeacherTasks(): string {
+    return 'Getting to work';
+  }
+}
 
-document.body.appendChild(table);
+function createEmployee(salary: number | string): Director | Teacher {
+  if (typeof salary === 'number' && salary < 500) {
+    return new Teacher();
+  }
+
+  return new Director();
+}
+
 function isDirector(employee: Director | Teacher): employee is Director {
   return employee instanceof Director;
 }
